@@ -52,3 +52,4 @@ For each of the datasets, there are a couple of cleaning steps we need to take c
 2. Reviews
     * Creating a date out of time stamp
 
+Afterwards data is saved as CSV files for later use.
