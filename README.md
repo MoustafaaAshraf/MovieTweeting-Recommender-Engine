@@ -2,8 +2,7 @@
 Movie Recommender Engine using data collected from Twitter
 
 <h1>Table of Contents<span class="tocSkip"></span></h1>
-<div class="toc"><ul class="toc-item"><li><span><a href="#Some-stats" data-toc-modified-id="Some-stats-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Some stats</a></span></li><li><span><a href="#A-Movie-Rating-Dataset-Collected-From-Twitter" data-toc-modified-id="A-Movie-Rating-Dataset-Collected-From-Twitter-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>A Movie Rating Dataset Collected From Twitter</a></span></li><li><span><a href="#Ratings-from-Twitter" data-toc-modified-id="Ratings-from-Twitter-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Ratings from Twitter</a></span></li><li><span><a href="#Data-Preparation" data-toc-modified-id="Data-Preparation-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Data Preparation</a></span></li><li><span><a href="#The-Recommender-Engine" data-toc-modified-id="The-Recommender-Engine-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>The Recommender Engine</a></span><ul class="toc-item"><li><span><a href="#Knowledge-Based-Recommendations" data-toc-modified-id="Knowledge-Based-Recommendations-5.1"><span class="toc-item-num">5.1&nbsp;&nbsp;</span>Knowledge-Based Recommendations</a></span><ul class="toc-item"><li><span><a href="#Part-I:-How-To-Find-The-Most-Popular-Movies" data-toc-modified-id="Part-I:-How-To-Find-The-Most-Popular-Movies-5.1.1"><span class="toc-item-num">5.1.1&nbsp;&nbsp;</span>Part I: How To Find The Most Popular Movies</a></span></li><li><span><a href="#Part-II:-Adding-Filters" data-toc-modified-id="Part-II:-Adding-Filters-5.1.2"><span class="toc-item-num">5.1.2&nbsp;&nbsp;</span>Part II: Adding Filters</a></span></li></ul></li></ul></li></ul></div>
-
+<div class="toc"><ul class="toc-item"><li><span><a href="#Some-stats" data-toc-modified-id="Some-stats-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Some stats</a></span></li><li><span><a href="#A-Movie-Rating-Dataset-Collected-From-Twitter" data-toc-modified-id="A-Movie-Rating-Dataset-Collected-From-Twitter-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>A Movie Rating Dataset Collected From Twitter</a></span></li><li><span><a href="#Ratings-from-Twitter" data-toc-modified-id="Ratings-from-Twitter-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Ratings from Twitter</a></span></li><li><span><a href="#Data-Preparation" data-toc-modified-id="Data-Preparation-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Data Preparation</a></span></li><li><span><a href="#The-Recommender-Engine" data-toc-modified-id="The-Recommender-Engine-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>The Recommender Engine</a></span><ul class="toc-item"><li><span><a href="#Knowledge-Based-Recommendations" data-toc-modified-id="Knowledge-Based-Recommendations-5.1"><span class="toc-item-num">5.1&nbsp;&nbsp;</span>Knowledge-Based Recommendations</a></span><ul class="toc-item"><li><span><a href="#Part-I:-How-To-Find-The-Most-Popular-Movies" data-toc-modified-id="Part-I:-How-To-Find-The-Most-Popular-Movies-5.1.1"><span class="toc-item-num">5.1.1&nbsp;&nbsp;</span>Part I: How To Find The Most Popular Movies</a></span></li><li><span><a href="#Part-II:-Adding-Filters" data-toc-modified-id="Part-II:-Adding-Filters-5.1.2"><span class="toc-item-num">5.1.2&nbsp;&nbsp;</span>Part II: Adding Filters</a></span></li></ul></li><li><span><a href="#Neighbourhood-based-Collaborative-Filtering-(User-based)" data-toc-modified-id="Neighbourhood-based-Collaborative-Filtering-(User-based)-5.2"><span class="toc-item-num">5.2&nbsp;&nbsp;</span>Neighbourhood-based Collaborative Filtering (User-based)</a></span><ul class="toc-item"><li><span><a href="#Part-I:-Creating-the-User-Item-Matrix" data-toc-modified-id="Part-I:-Creating-the-User-Item-Matrix-5.2.1"><span class="toc-item-num">5.2.1&nbsp;&nbsp;</span>Part I: Creating the User-Item Matrix</a></span></li><li><span><a href="#Part-II:-Creating-a-dictionary-for-watched-movies-by-each-user" data-toc-modified-id="Part-II:-Creating-a-dictionary-for-watched-movies-by-each-user-5.2.2"><span class="toc-item-num">5.2.2&nbsp;&nbsp;</span>Part II: Creating a dictionary for watched movies by each user</a></span></li><li><span><a href="#Part-III:-Filtering-users-whom-I-could-offer-recommendations-to" data-toc-modified-id="Part-III:-Filtering-users-whom-I-could-offer-recommendations-to-5.2.3"><span class="toc-item-num">5.2.3&nbsp;&nbsp;</span>Part III: Filtering users whom I could offer recommendations to</a></span></li><li><span><a href="#Part-IV:-Calculating-User-Similarities-using-Euclidean-Distance" data-toc-modified-id="Part-IV:-Calculating-User-Similarities-using-Euclidean-Distance-5.2.4"><span class="toc-item-num">5.2.4&nbsp;&nbsp;</span>Part IV: Calculating User Similarities using Euclidean Distance</a></span></li><li><span><a href="#Part-V:-Using-the-Nearest-Neighbors-to-Make-Recommendations" data-toc-modified-id="Part-V:-Using-the-Nearest-Neighbors-to-Make-Recommendations-5.2.5"><span class="toc-item-num">5.2.5&nbsp;&nbsp;</span>Part V: Using the Nearest Neighbors to Make Recommendations</a></span></li></ul></li></ul></li></ul></div>
 
 ## Some stats
 
@@ -67,9 +66,68 @@ For this task, we will consider what is "most popular" based on the following cr
     - A movie must have a minimum of 5 ratings to be considered among the best movies
     - If movies are tied in their average rating and number of ratings, the ranking is determined by the movie that is the most recent rating
 
-With these criterion, the goal for this notebook is to take a **user_id** and provide back the **n_top** recommendations.  Use the function below as the scaffolding that will be used for all the future recommendations as well.
+With these criteria, the goal for this notebook is to take a **user_id** and provide back the **n_top** recommendations.  
+Use the function below as the scaffolding that will be used for all the future recommendations as well.
 
 #### Part II: Adding Filters
 
-Users usually like to choose the popular movies within certain categories, like genre and year of release. In this part I will add a functionality to the script to enable the user to filter the most popular movies based on genre and year. 
+Users usually like to choose the popular movies within certain categories, like genre and year of release. In this part 
+I will add a functionality to the script to enable the user to filter the most popular movies based on genre and year. 
 
+### Neighbourhood-based Collaborative Filtering (User-based)
+
+Script in file: **3. Neighbourhood-based Collaborative Filtering (User-based).ipynb** 
+
+For this notebook,  the aim is to provide recommendations for all user who have rated 3 or more movies with recommended 
+movies for their taste based on other users. The other users used for providing recommendations are thought to be of 
+similar taste. Hence, users have **collaborated** with each other to provide recommendations for themselves based on
+similarity in taste between the users. 
+
+#### Part I: Creating the User-Item Matrix
+
+The aim is to create a dataframe in the shape of user vs item filled with the ratings of each user to the given item 
+using the dataframe user_items.
+
+![alt text](images/userxitem.png "User Item Matrix")
+
+#### Part II: Creating a dictionary for watched movies by each user
+
+using the User-Item matrix I have created a dictionary where the key is each user and the value is an array of the 
+movies ids each user has rated.
+
+#### Part III: Filtering users whom I could offer recommendations to
+
+If a user hasn't rated more than 2 movies, we consider these users "too new". Create a new dictionary that only 
+contains users who have rated more than 2 movies.
+
+#### Part IV: Calculating User Similarities using Euclidean Distance
+
+The similarities between users are calculated. Below is the pseudocode for how I thought about determining the similarity between users:
+
+```
+for user1 in movies_to_analyze
+    for user2 in movies_to_analyze
+        see how many movies match between the two users
+        if more than two movies in common
+            pull the overlapping movies
+            compute the distance metric between ratings on the same movies for the two users
+            store the users and the distance metric
+```
+
+#### Part V: Using the Nearest Neighbors to Make Recommendations
+
+The recommendation for all the users in the database are done using the following five functions:
+
+* **find_closest_neighbors** - this returns a list of user_ids from closest neighbor to farthest neighbor using euclidean distance
+
+
+* **movies_liked** - returns an array of movie_ids
+
+
+* **movie_names** - takes the output of movies_liked and returns a list of movie names associated with the movie_ids
+
+
+* **make_recommendations** - takes a user id and goes through closest neighbors to return a list of movie names as recommendations
+
+
+* **all_recommendations** - loops through every user and returns a dictionary of with the key as a user_id and the value as a list of movie recommendations
