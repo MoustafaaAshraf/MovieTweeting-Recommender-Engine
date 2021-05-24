@@ -131,3 +131,59 @@ The recommendation for all the users in the database are done using the followin
 
 
 * **all_recommendations** - loops through every user and returns a dictionary of with the key as a user_id and the value as a list of movie recommendations
+
+
+### Neighbourhood-based Collaborative Filtering (Item-based)
+
+Script in file: **4. Neighbourhood-based Collaborative Filtering (Content-based).ipynb** 
+
+**Motivation**: In the previous notebook, recommendations was introduced using collaborative filtering.
+However, using this technique there are many users who were left without any recommendations at all.
+Other users were left with fewer than the ten recommendations.
+
+In order to provide these users with recommendations, **content based** recommendation technique will be used.
+
+Content based recommendations are a collaboration between items (similarities between items) in order to capture further
+preference of a user who have rated a relatively small amount of items.
+
+Because the user is not providing us with enough information about his preferences,
+we can not link them to another similar user. we take the little amount 
+he has given us and relate it to another similar item like the one they have liked.
+
+#### Part I: Datasets used breakdown
+
+A quick check of all the tools we have in our toolbox, and a plan of how we are going to use them.
+
+#### Part II: Identifying users who still needs recommendations
+
+The motivation of this notebook is to take care of the users who did not receive enough recommendations.
+the first step is to identify those users and isolate them (by user_id) from the user who has got full recommendations
+into **two separate lists**.
+
+#### Part III: Finding similarities between movies items
+
+Because similarities between users is not a good indication of taste for some users, as they have not interacted 
+with many content enough, similarities between items/movies is calculated using **matrix dot-product** 
+from movies dataframe.
+
+#### Part IV: Providing recommendation for users
+
+Now that we have two matrices that would help us to provide recommendations for all users who have less than 10 recommendations:
+
+`a.` Matrix where each user has their ratings ordered. (ordered first by user_id, then by rating) 
+
+`b.` Matrix where movies are each axis, and the matrix entries are larger where the two movies are more similar and smaller where the two movies are dissimilar.  This matrix is a measure of content similarity.
+
+For each user, we will perform the following:
+
+    i. For each movie, find the movies that are most similar that the user hasn't seen.
+
+    ii. Continue through the available, rated movies until 10 recommendations or until there are no additional movies.
+
+#### Part V: How Did We Do?
+
+The aim of this notebook has been achieved, 
+
+`a.` There were 45166 user who still needed recommendations, who have received less than 10 recommendations.
+
+`b.` Now there 2179 who still need recommendation.
