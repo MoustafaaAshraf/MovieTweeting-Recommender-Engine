@@ -218,7 +218,11 @@ The process of creating the two matrices goes as follows:
     
     3. Using the two arrays, a numpy matrix of user_by_movie is searched for each value which is not NaN.
     
-    4. Whenever an actual rating is found the user_mat, movie_mat matrices are updated.
+    4. Whenever an actual rating is found the user_mat, movie_mat matrices are updated using the FunlSVD equations.
+    
+        u_new = u_old + {learn_rate * 2 * (actual - pred) * v_old}
+    
+        v_new = v_old + {learn_rate * 2 * (actual - pred) * u_old}
     
     5. With every iteration over the whole process, a predicted rating is caluclated using dot product between user_mat and movie_mat at every user-movie combination and compared to the the actual rating provided and SSE is calculated. 
     
@@ -226,4 +230,8 @@ The process of creating the two matrices goes as follows:
     
 #### Part II: Training the recommender engine
 
+The training is performed using 15 latent features with a learning rate of 0.005
+
 #### Part III: Providing Predicted ratings of a user to each movie
+
+A dot product calculation of the predicted rating for every movie by each user is calculated which can be user later in providing recommendations.
